@@ -344,4 +344,36 @@ std::vector<std::pair<std::vector<lemon::ListDigraph::Node>, std::vector<std::ve
 std::vector<std::pair<std::vector<lemon::ListDigraph::Node>, std::vector<std::vector<lemon::ListDigraph::Node>>>> greedy_path_maximal_safe_paths_U_PC(lemon::ListDigraph& g, std::vector<lemon::ListDigraph::Node>& S, std::vector<lemon::ListDigraph::Node>& T, std::vector<lemon::ListDigraph::Node>& U, int64_t l);
 
 
+
+/*
+ * Computes safe paths present as
+ * subpaths of every PC of size <= l of g.
+ * (it assumes l \in [width(G) .... 2width(G)-1]) of g, covering the
+ * vertices in U,
+ * with path starting at S and
+ * ending at T.
+ *
+ * First computes a MPC covering the
+ * vertices in U with paths
+ * starting at S and ending at T
+ * with the MinFlow<Greedy+MaxFlow> reduction,
+ *
+ * then it computes safe edges ,
+ *
+ * and then for
+ * every path in the path cover
+ * runs the two finger algorithm
+ * to find maximal safe path inside
+ * every path. Safe edges are used to skip
+ * unnecessary computation in the algorithm
+ *
+ * It returns a list of paths of a MPC covering the
+ * vertices in U,
+ * with paths starting at S and ending
+ * at T and its corresponding safe_paths
+ */
+std::vector<std::pair<std::vector<lemon::ListDigraph::Node>, std::vector<std::vector<lemon::ListDigraph::Node>>>> optimized_greedy_path_maximal_safe_paths_U_PC(lemon::ListDigraph& g, std::vector<lemon::ListDigraph::Node>& S, std::vector<lemon::ListDigraph::Node>& T, std::vector<lemon::ListDigraph::Node>& U, int64_t l);
+
+
+
 #endif //SAFEPATHSRNAPC_SAFE_PATHS_H
