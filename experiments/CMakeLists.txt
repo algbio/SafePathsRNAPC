@@ -1,6 +1,8 @@
 set(project_EXECUTABLES
         run_mpc
-        run_safe_paths)
+        run_safe_paths
+        run_safe_paths_naive
+        run_safe_paths_opt)
 
 
 foreach( exe ${project_EXECUTABLES} )

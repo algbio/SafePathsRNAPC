@@ -3734,8 +3734,12 @@ std::vector<std::pair<std::vector<ListDigraph::Node>, std::vector<std::vector<Li
 
     // Compute in_U
     ListDigraph::NodeMap<bool> in_U(g, false);
+    ListDigraph::NodeMap<bool> in_S(g, false);
     for (ListDigraph::Node v : U) {
         in_U[v] = true;
+    }
+    for (ListDigraph::Node v : S) {
+        in_S[v] = true;
     }
 
     // Build the Min-Flow network reduction
@@ -3887,6 +3891,8 @@ std::vector<std::pair<std::vector<ListDigraph::Node>, std::vector<std::vector<Li
                     if (u != path[z-1]) {
                         transitive_edges.push_back(red.addArc(v_out[u], v_in[x_p]));
                     }
+                } if (in_S[v]) {
+                    transitive_edges.push_back(red.addArc(s, v_in[x_p]));
                 }
             }
 
@@ -3945,8 +3951,12 @@ std::vector<std::pair<std::vector<ListDigraph::Node>, std::vector<std::vector<Li
 
     // Compute in_U
     ListDigraph::NodeMap<bool> in_U(g, false);
+    ListDigraph::NodeMap<bool> in_S(g, false);
     for (ListDigraph::Node v : U) {
         in_U[v] = true;
+    }
+    for (ListDigraph::Node v : S) {
+        in_S[v] = true;
     }
 
     // Build the Min-Flow network reduction
@@ -4192,6 +4202,18 @@ std::vector<std::pair<std::vector<ListDigraph::Node>, std::vector<std::vector<Li
                         transitive_edges.push_back(rev_tran_e);
                     }
                 }
+                if (in_S[v]) {
+                    ListDigraph::Arc tran_e = red.addArc(s, red.source(split_edges[x_p]));
+                    direct[tran_e] = tran_e;
+                    capacities[tran_e] = 0;
+
+                    ListDigraph::Arc rev_tran_e = red.addArc(red.target(tran_e), red.source(tran_e));
+                    direct[rev_tran_e] = tran_e;
+                    capacities[rev_tran_e] = countNodes(g);
+
+                    transitive_edges.push_back(tran_e);
+                    transitive_edges.push_back(rev_tran_e);
+                }
             }
 
             // Redistribute the flow (if possible)
@@ -4402,8 +4424,12 @@ std::vector<std::pair<std::vector<ListDigraph::Node>, std::vector<std::vector<Li
 
     // Compute in_U
     ListDigraph::NodeMap<bool> in_U(g, false);
+    ListDigraph::NodeMap<bool> in_S(g, false);
     for (ListDigraph::Node v : U) {
         in_U[v] = true;
+    }
+    for (ListDigraph::Node v : S) {
+        in_S[v] = true;
     }
 
     // Build the Min-Flow network reduction
@@ -4866,6 +4892,17 @@ std::vector<std::pair<std::vector<ListDigraph::Node>, std::vector<std::vector<Li
                             transitive_edges.push_back(tran_e);
                             transitive_edges.push_back(rev_tran_e);
                         }
+                    } if (in_S[v]) {
+                        ListDigraph::Arc tran_e = red.addArc(s, red.source(split_edges[x_p]));
+                        direct[tran_e] = tran_e;
+                        capacities[tran_e] = 0;
+
+                        ListDigraph::Arc rev_tran_e = red.addArc(red.target(tran_e), red.source(tran_e));
+                        direct[rev_tran_e] = tran_e;
+                        capacities[rev_tran_e] = countNodes(g);
+
+                        transitive_edges.push_back(tran_e);
+                        transitive_edges.push_back(rev_tran_e);
                     }
                 }
 
