@@ -1,2 +1,9 @@
 .idea/
 cmake-build-debug/
+build/
+*.ipynb_checkpoints/
+data/gene_graphs/
+data/lgf/
+data/mpc/
+data/safe_paths/
+data/safe_paths_json/
