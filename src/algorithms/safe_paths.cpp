@@ -3799,6 +3799,240 @@ std::vector<std::pair<std::vector<ListDigraph::Node>, std::vector<std::vector<Li
 
 
 
+std::vector<std::pair<std::vector<ListDigraph::Node>, std::vector<std::vector<ListDigraph::Node>>>> naive_path_maximal_safe_paths_U_PC(ListDigraph& g, std::vector<ListDigraph::Node>& S, std::vector<ListDigraph::Node>& T, std::vector<lemon::ListDigraph::Node>& U, int64_t l) {
+
+    // Compute in_U
+    ListDigraph::NodeMap<bool> in_U(g, false);
+    ListDigraph::NodeMap<bool> in_S(g, false);
+    for (ListDigraph::Node v : U) {
+        in_U[v] = true;
+    }
+    for (ListDigraph::Node v : S) {
+        in_S[v] = true;
+    }
+
+    // Build the Min-Flow network reduction
+    ListDigraph red;
+
+    ListDigraph::NodeMap<ListDigraph::Node> v_in(g);
+    ListDigraph::NodeMap<ListDigraph::Node> v_out(g);
+    ListDigraph::NodeMap<ListDigraph::Node> original(red);
+    ListDigraph::ArcMap<int> cost(red, 0);
+    ListDigraph::ArcMap<int> demand(red, 0);
+    ListDigraph::NodeMap<int> supply(red, 0);
+
+    ListDigraph::Node s = red.addNode();
+    ListDigraph::Node t = red.addNode();
+    ListDigraph::Arc st = red.addArc(s, t);
+    supply[s] = countNodes(g);
+    supply[t] = -countNodes(g);
+
+
+    // Set split vertices
+    for (ListDigraph::NodeIt v(g); v != INVALID; ++v) {
+        v_in[v] = red.addNode();
+        v_out[v] = red.addNode();
+        original[v_in[v]] = v;
+        original[v_out[v]] = v;
+
+        ListDigraph::Arc split = red.addArc(v_in[v], v_out[v]);
+        if (in_U[v]) {
+            demand[split] = 1;
+        }
+    }
+    for (ListDigraph::Node v : S) {
+        ListDigraph::Arc sv = red.addArc(s, v_in[v]);
+        cost[sv] = 1;
+    }
+    for (ListDigraph::Node v : T) {
+        red.addArc(v_out[v], t);
+    }
+
+    // Set edges connecting split vertices
+    for (ListDigraph::ArcIt e(g); e != INVALID; ++e) {
+        ListDigraph::Node u = g.source(e);
+        ListDigraph::Node v = g.target(e);
+
+        red.addArc(v_out[u], v_in[v]);
+    }
+
+
+
+    // Use NetworkSimplex for solving the min-flow
+    NetworkSimplex<ListDigraph> ns(red);
+    ns.lowerMap(demand).costMap(cost).supplyMap(supply).run();
+    int64_t width = ns.totalCost();
+    if (width > l) { // Case where there are not safe edges at all
+        return {};
+    }
+
+    // Obtain Flow solution
+    ListDigraph::ArcMap<int64_t> flowMap(red);
+    ns.flowMap(flowMap);
+
+    // Extract the Minimum Path Cover solution from the flow
+    std::vector<std::vector<ListDigraph::Node>> path_cover;
+    std::vector<std::vector<ListDigraph::Arc>> path_cover_edges_red;
+
+    // Remove 0 flow edges and st
+
+    // Stores the modified edges with the corresponding target
+    // (we use the strategy to move the target to the source instead of removing)
+    std::vector<std::pair<ListDigraph::Arc , ListDigraph::Node>> restorage_list = {{st, t}};
+    for (ListDigraph::ArcIt e(red); e != INVALID; ++e) {
+        if (flowMap[e] == 0) {
+            restorage_list.push_back({e, red.target(e)});
+        }
+    }
+    for (auto& pair : restorage_list) {
+        red.changeTarget(pair.first, red.source(pair.first));
+    }
+
+
+    Dfs<ListDigraph> dfs(red);
+    bool reachable = dfs.run(s, t);
+
+    while (reachable) {
+        std::vector<ListDigraph::Node> path;
+        std::vector<ListDigraph::Arc> path_edges_red;
+
+        ListDigraph::Node v = t;
+        ListDigraph::Arc e;
+        while ((e = dfs.predArc(v)) != INVALID) {
+            if (v != t) {
+                if (path.empty() || path.back() != original[v]) {
+                    path.push_back(original[v]);
+                } else if (red.source(e) != s && (!path.empty() && path.back() == original[v])) {
+                    path_edges_red.push_back(e);
+                }
+            }
+            flowMap[e]--;
+            if (flowMap[e] == 0) {
+                restorage_list.push_back({e, red.target(e)});
+                red.changeTarget(e, red.source(e));
+            }
+            v = red.source(e);
+        }
+        std::reverse(path.begin(), path.end());
+        std::reverse(path_edges_red.begin(), path_edges_red.end());
+
+        path_cover.push_back(path);
+        path_cover_edges_red.push_back(path_edges_red);
+
+
+        dfs = Dfs<ListDigraph>(red);
+        reachable = dfs.run(s, t);
+    }
+
+
+
+    // Compute Safe Paths
+
+    // Restore removed edges
+    for (auto& pair: restorage_list) {
+        red.changeTarget(pair.first, pair.second);
+    }
+
+    std::vector<std::pair<std::vector<ListDigraph::Node>, std::vector<std::vector<ListDigraph::Node>>>> path_maximal_safe_paths_per_path;
+
+
+    for (int i = 0; i < path_cover.size(); ++i) {
+        std::pair<std::vector<ListDigraph::Node>, std::vector<std::vector<ListDigraph::Node>>> path_maximal_safe_paths_pair;
+        std::vector<std::vector<ListDigraph::Node>> path_maximal_safe_paths;
+
+        std::vector<ListDigraph::Node>& path = path_cover[i];
+        std::vector<ListDigraph::Arc>& path_edges_red = path_cover_edges_red[i];
+
+        std::vector<std::list<std::pair<int,int>>> safe_coordinates; // safe_coordinates[i] contains a list with the
+        // pair of coordinates of safe paths subpaths of path, and of length i (edges)
+        std::list<std::pair<int,int>> vertices;
+        for (int i = 0; i < path.size(); ++i) {
+                vertices.push_back({i,i});
+        }
+        safe_coordinates.push_back(vertices);
+
+        int prev_length = 0;
+        while (safe_coordinates[prev_length].size() != 0) {
+            std::list<std::pair<int,int>> safe_coor_curr;
+
+            for (auto it = safe_coordinates[prev_length].begin(); it != safe_coordinates[prev_length].end(); ) {
+                int x = (*it).first;
+                int y = (*it).second;
+
+                // Code testing whether x...y+1 is safe and if so putting this into the current level
+                if (y+1 < path.size()) {
+                    std::vector<ListDigraph::Arc> transitive_edges;
+                    ListDigraph::Node x_p = path[y+1];
+                    ListDigraph::Arc e = path_edges_red[y];
+
+
+                    // Compute reduction
+                    red.changeTarget(e, red.source(e));
+                    for (int z = x+1; z <= y; ++z) {
+                        ListDigraph::Node v = path[z];
+                        for (ListDigraph::InArcIt to_v(g, v); to_v != INVALID; ++to_v) {
+                            ListDigraph::Node u = g.source(to_v);
+                            if (u != path[z-1]) {
+                                transitive_edges.push_back(red.addArc(v_out[u], v_in[x_p]));
+                            }
+                        } if (in_S[v]) {
+                            transitive_edges.push_back(red.addArc(s, v_in[x_p]));
+                        }
+                    }
+
+                    // Compute new width
+                    ns.reset();
+                    NetworkSimplex<ListDigraph>::ProblemType result = ns.lowerMap(demand).costMap(cost).supplyMap(supply).run();
+                    int64_t new_width = ns.totalCost(); // Maybe we have to check something else here for the RNA path cover case
+
+                    if (new_width > l || result != NetworkSimplex<ListDigraph>::OPTIMAL) { // It is safe
+                        // Put the coordinates into the safe list of this length
+                        safe_coor_curr.push_back({x,y+1});
+                    }
+
+                    // Remove transitive edges and add e
+                    red.changeTarget(e, v_in[x_p]);
+                    for (ListDigraph::Arc e : transitive_edges) {
+                        red.erase(e);
+                    }
+                }
+
+                // If the previous coordinates are containes remove them
+                if (!safe_coor_curr.empty() && safe_coor_curr.back().first <= x && safe_coor_curr.back().second >= y) {
+                    it = safe_coordinates[prev_length].erase(it);
+                } else {
+                    ++it;
+                }
+            }
+            safe_coordinates.push_back(safe_coor_curr);
+            ++prev_length;
+        }
+
+        // Store paths in required format (transform coordinates to paths)
+        // (possibly) report the last path
+        for (int l = 1; l<prev_length; ++l) {
+            for (auto it = safe_coordinates[l].begin(); it != safe_coordinates[l].end(); ++it) {
+                int x = (*it).first;
+                int y = (*it).second;
+                std::vector<ListDigraph::Node> maximal_safe_path;
+                for (int z = x; z <= y; ++z) {
+                    maximal_safe_path.push_back(path[z]);
+                }
+                path_maximal_safe_paths.push_back(maximal_safe_path);
+            }
+        }
+
+        path_maximal_safe_paths_pair.first = path;
+        path_maximal_safe_paths_pair.second = path_maximal_safe_paths;
+        path_maximal_safe_paths_per_path.push_back(path_maximal_safe_paths_pair);
+    }
+
+    return path_maximal_safe_paths_per_path;
+}
+
+
+
+
 std::vector<std::pair<std::vector<ListDigraph::Node>, std::vector<std::vector<ListDigraph::Node>>>> path_maximal_safe_paths_U_PC(ListDigraph& g, std::vector<ListDigraph::Node>& S, std::vector<ListDigraph::Node>& T, std::vector<lemon::ListDigraph::Node>& U, int64_t l) {
 
     // Compute in_U
