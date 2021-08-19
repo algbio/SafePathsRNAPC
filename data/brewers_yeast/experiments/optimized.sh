@@ -56,8 +56,6 @@
 /usr/bin/time -o ../safe_paths/component_871_2_mem -f "%M,%U,%S" ../../../build/experiments/run_safe_paths "../lgf/component_871.lgf" 2 > ../safe_paths/component_871_2
 /usr/bin/time -o ../safe_paths/component_871_1_mem -f "%M,%U,%S" ../../../build/experiments/run_safe_paths "../lgf/component_871.lgf" 1 > ../safe_paths/component_871_1
 /usr/bin/time -o ../safe_paths/component_871_2_mem -f "%M,%U,%S" ../../../build/experiments/run_safe_paths "../lgf/component_871.lgf" 2 > ../safe_paths/component_871_2
-/usr/bin/time -o ../safe_paths/component_1034_2_mem -f "%M,%U,%S" ../../../build/experiments/run_safe_paths "../lgf/component_1034.lgf" 2 > ../safe_paths/component_1034_2
-/usr/bin/time -o ../safe_paths/component_1034_1_mem -f "%M,%U,%S" ../../../build/experiments/run_safe_paths "../lgf/component_1034.lgf" 1 > ../safe_paths/component_1034_1
 /usr/bin/time -o ../safe_paths/component_1064_4_mem -f "%M,%U,%S" ../../../build/experiments/run_safe_paths "../lgf/component_1064.lgf" 4 > ../safe_paths/component_1064_4
 /usr/bin/time -o ../safe_paths/component_1064_2_mem -f "%M,%U,%S" ../../../build/experiments/run_safe_paths "../lgf/component_1064.lgf" 2 > ../safe_paths/component_1064_2
 /usr/bin/time -o ../safe_paths/component_1073_2_mem -f "%M,%U,%S" ../../../build/experiments/run_safe_paths "../lgf/component_1073.lgf" 2 > ../safe_paths/component_1073_2
@@ -69,8 +67,6 @@
 /usr/bin/time -o ../safe_paths/component_1375_2_mem -f "%M,%U,%S" ../../../build/experiments/run_safe_paths "../lgf/component_1375.lgf" 2 > ../safe_paths/component_1375_2
 /usr/bin/time -o ../safe_paths/component_1375_1_mem -f "%M,%U,%S" ../../../build/experiments/run_safe_paths "../lgf/component_1375.lgf" 1 > ../safe_paths/component_1375_1
 /usr/bin/time -o ../safe_paths/component_1375_2_mem -f "%M,%U,%S" ../../../build/experiments/run_safe_paths "../lgf/component_1375.lgf" 2 > ../safe_paths/component_1375_2
-/usr/bin/time -o ../safe_paths/component_1381_2_mem -f "%M,%U,%S" ../../../build/experiments/run_safe_paths "../lgf/component_1381.lgf" 2 > ../safe_paths/component_1381_2
-/usr/bin/time -o ../safe_paths/component_1381_1_mem -f "%M,%U,%S" ../../../build/experiments/run_safe_paths "../lgf/component_1381.lgf" 1 > ../safe_paths/component_1381_1
 /usr/bin/time -o ../safe_paths/component_1397_2_mem -f "%M,%U,%S" ../../../build/experiments/run_safe_paths "../lgf/component_1397.lgf" 2 > ../safe_paths/component_1397_2
 /usr/bin/time -o ../safe_paths/component_1397_1_mem -f "%M,%U,%S" ../../../build/experiments/run_safe_paths "../lgf/component_1397.lgf" 1 > ../safe_paths/component_1397_1
 /usr/bin/time -o ../safe_paths/component_1397_2_mem -f "%M,%U,%S" ../../../build/experiments/run_safe_paths "../lgf/component_1397.lgf" 2 > ../safe_paths/component_1397_2
@@ -106,8 +102,6 @@
 /usr/bin/time -o ../safe_paths/component_1903_2_mem -f "%M,%U,%S" ../../../build/experiments/run_safe_paths "../lgf/component_1903.lgf" 2 > ../safe_paths/component_1903_2
 /usr/bin/time -o ../safe_paths/component_1903_1_mem -f "%M,%U,%S" ../../../build/experiments/run_safe_paths "../lgf/component_1903.lgf" 1 > ../safe_paths/component_1903_1
 /usr/bin/time -o ../safe_paths/component_1903_2_mem -f "%M,%U,%S" ../../../build/experiments/run_safe_paths "../lgf/component_1903.lgf" 2 > ../safe_paths/component_1903_2
-/usr/bin/time -o ../safe_paths/component_1920_2_mem -f "%M,%U,%S" ../../../build/experiments/run_safe_paths "../lgf/component_1920.lgf" 2 > ../safe_paths/component_1920_2
-/usr/bin/time -o ../safe_paths/component_1920_1_mem -f "%M,%U,%S" ../../../build/experiments/run_safe_paths "../lgf/component_1920.lgf" 1 > ../safe_paths/component_1920_1
 /usr/bin/time -o ../safe_paths/component_1921_2_mem -f "%M,%U,%S" ../../../build/experiments/run_safe_paths "../lgf/component_1921.lgf" 2 > ../safe_paths/component_1921_2
 /usr/bin/time -o ../safe_paths/component_1921_1_mem -f "%M,%U,%S" ../../../build/experiments/run_safe_paths "../lgf/component_1921.lgf" 1 > ../safe_paths/component_1921_1
 /usr/bin/time -o ../safe_paths/component_1921_2_mem -f "%M,%U,%S" ../../../build/experiments/run_safe_paths "../lgf/component_1921.lgf" 2 > ../safe_paths/component_1921_2
@@ -156,8 +150,6 @@
 /usr/bin/time -o ../safe_paths/component_2864_2_mem -f "%M,%U,%S" ../../../build/experiments/run_safe_paths "../lgf/component_2864.lgf" 2 > ../safe_paths/component_2864_2
 /usr/bin/time -o ../safe_paths/component_2864_1_mem -f "%M,%U,%S" ../../../build/experiments/run_safe_paths "../lgf/component_2864.lgf" 1 > ../safe_paths/component_2864_1
 /usr/bin/time -o ../safe_paths/component_2864_2_mem -f "%M,%U,%S" ../../../build/experiments/run_safe_paths "../lgf/component_2864.lgf" 2 > ../safe_paths/component_2864_2
-/usr/bin/time -o ../safe_paths/component_2925_2_mem -f "%M,%U,%S" ../../../build/experiments/run_safe_paths "../lgf/component_2925.lgf" 2 > ../safe_paths/component_2925_2
-/usr/bin/time -o ../safe_paths/component_2925_1_mem -f "%M,%U,%S" ../../../build/experiments/run_safe_paths "../lgf/component_2925.lgf" 1 > ../safe_paths/component_2925_1
 /usr/bin/time -o ../safe_paths/component_2954_2_mem -f "%M,%U,%S" ../../../build/experiments/run_safe_paths "../lgf/component_2954.lgf" 2 > ../safe_paths/component_2954_2
 /usr/bin/time -o ../safe_paths/component_2954_1_mem -f "%M,%U,%S" ../../../build/experiments/run_safe_paths "../lgf/component_2954.lgf" 1 > ../safe_paths/component_2954_1
 /usr/bin/time -o ../safe_paths/component_2954_2_mem -f "%M,%U,%S" ../../../build/experiments/run_safe_paths "../lgf/component_2954.lgf" 2 > ../safe_paths/component_2954_2
@@ -197,10 +189,6 @@
 /usr/bin/time -o ../safe_paths/component_3270_2_mem -f "%M,%U,%S" ../../../build/experiments/run_safe_paths "../lgf/component_3270.lgf" 2 > ../safe_paths/component_3270_2
 /usr/bin/time -o ../safe_paths/component_3270_1_mem -f "%M,%U,%S" ../../../build/experiments/run_safe_paths "../lgf/component_3270.lgf" 1 > ../safe_paths/component_3270_1
 /usr/bin/time -o ../safe_paths/component_3270_2_mem -f "%M,%U,%S" ../../../build/experiments/run_safe_paths "../lgf/component_3270.lgf" 2 > ../safe_paths/component_3270_2
-/usr/bin/time -o ../safe_paths/component_3282_2_mem -f "%M,%U,%S" ../../../build/experiments/run_safe_paths "../lgf/component_3282.lgf" 2 > ../safe_paths/component_3282_2
-/usr/bin/time -o ../safe_paths/component_3282_1_mem -f "%M,%U,%S" ../../../build/experiments/run_safe_paths "../lgf/component_3282.lgf" 1 > ../safe_paths/component_3282_1
-/usr/bin/time -o ../safe_paths/component_3305_2_mem -f "%M,%U,%S" ../../../build/experiments/run_safe_paths "../lgf/component_3305.lgf" 2 > ../safe_paths/component_3305_2
-/usr/bin/time -o ../safe_paths/component_3305_1_mem -f "%M,%U,%S" ../../../build/experiments/run_safe_paths "../lgf/component_3305.lgf" 1 > ../safe_paths/component_3305_1
 /usr/bin/time -o ../safe_paths/component_3337_2_mem -f "%M,%U,%S" ../../../build/experiments/run_safe_paths "../lgf/component_3337.lgf" 2 > ../safe_paths/component_3337_2
 /usr/bin/time -o ../safe_paths/component_3337_1_mem -f "%M,%U,%S" ../../../build/experiments/run_safe_paths "../lgf/component_3337.lgf" 1 > ../safe_paths/component_3337_1
 /usr/bin/time -o ../safe_paths/component_3337_2_mem -f "%M,%U,%S" ../../../build/experiments/run_safe_paths "../lgf/component_3337.lgf" 2 > ../safe_paths/component_3337_2
