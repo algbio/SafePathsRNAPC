@@ -34,7 +34,7 @@ After compiling the C++ code you can replicate our experiments by running the Ju
 
 These notebooks correspond to the experiments for `Homo sapiens`. The experiments for other species can be found (following the same structure) in the folders `data/mouse` (Mus musculus), `data/triticum_aestivum`, `data/hordeum_vulgare`, `data/fruit_fly` (Drosophila melanogaster) and `data/magnaporthe_oryzae`.
 
-Once all these notebooks have be run, you can run the notebook `compute_summary_tables.ipynb`.
+Once all these notebooks have been run, you can run the notebook `compute_summary_tables.ipynb`.
 
 > The package requirements to run our jupyter notebooks can be found at `data/requirements.txt`
 
