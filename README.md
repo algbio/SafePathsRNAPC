@@ -3,7 +3,7 @@ This repository contains:
 - The implementation of the computation of Safe Paths under different models of Path Cover in a Directed Acyclic Graph (DAG). C++ code.
 - Experimental evaluation of the algorithm by computing contigs in a RNA Transcript Assembly problem. Jupyter Notebook.
 
-A comprehensive explanation of both parts can be found in [Insert reference to publication here].
+A comprehensive explanation of both parts can be found in [https://doi.org/10.1109/TCBB.2021.3131203](https://doi.org/10.1109/TCBB.2021.3131203).
 
 ## C++ algorithm
 First clone the repo:
