@@ -8,7 +8,7 @@ A comprehensive explanation of both parts can be found in [https://doi.org/10.11
 ## C++ algorithm
 First clone the repo:
 ```
- git clone https://github.com/algobio/SafePathsRNAPC.git
+ git clone https://github.com/algbio/SafePathsRNAPC.git
  ```
  
 This project is a CMake project. To build this project with some runnables you should do
